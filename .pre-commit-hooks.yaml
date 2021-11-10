@@ -1,38 +1,8 @@
 ---
-- id: detekt
-  name: Detekt
-  description: "Runs the Detekt static code analyzer on Kotlin source files."
-  language: coursier
-  entry: detekt
-  pass_filenames: false
-  files: \.kt$
-  require_serial: true
-- id: google-java-formatter-jdk8
+- id: google-java-format
   name: Google Java Formatter
-  description: "Runs the Google Java Formatter on Java source files. Minimum supported runtime version is JDK 8."
-  language: coursier
-  entry: google-java-format-jdk8
-  files: \.java$
-  require_serial: true
-- id: google-java-formatter-jdk11
-  name: Google Java Formatter
-  description: "Runs the Google Java Formatter on Java source files. Minimum supported runtime version is JDK 11."
-  language: coursier
-  entry: google-java-format-jdk11
-  files: \.java$
-  require_serial: true
-- id: ktlint
-  name: ktlint
-  description: "Runs the ktlint linter and formatter on Kotlin source files."
-  language: coursier
-  entry: ktlint
-  files: \.kt$
-  require_serial: true
-- id: pmd
-  name: PMD
-  description: "Runs the PMD static code analyzer on Java source files."
-  language: coursier
-  entry: pmd
-  pass_filenames: false
+  description: "Runs the Google Java Formatter on Java source files."
+  language: script
+  entry: ./format-code.sh
   files: \.java$
   require_serial: true

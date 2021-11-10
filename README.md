@@ -10,7 +10,7 @@ A collection of git hooks for the JVM to be used with the [pre-commit framework]
 pre-commit-jvm requires the following to run:
 
   * [pre-commit(2.8+)](http://pre-commit.com)
-  * [Coursier](https://get-coursier.io/)
+  * A JDK somewhere in your `PATH`, preferably with `JAVA_HOME` also set.
 
 ## Install
 
@@ -23,85 +23,23 @@ example `.pre-commit-config.yaml`:
 - repo: https://github.com/dustinsand/pre-commit-jvm
   rev: vX.X.X
   hooks:
-    - id: detekt
-      args: [--config, detekt-config.yml]
-    - id: google-java-formatter-jdk11
+    - id: google-java-format
       args: [--replace, --set-exit-if-changed]
-    - id: ktlint
-      args: [--format]
-    - id: pmd
-      args: [ -rulesets, pmd-ruleset.xml, -language, java, -cache, .pmd/cache, -dir, src/main/java, -f, textcolor ]
 ```
 
 ## Available Hooks
 
-| Hook name       | Description                                                                                        |
-| --------------- | -------------------------------------------------------------------------------------------------- |
-| `detekt`           | Runs [Detekt](https://detekt.github.io/detekt/) static code analyzer on Kotlin source files. |
-| `google-java-formatter-jdk8`           | Runs [Google Java Formatter](https://github.com/google/google-java-format) to reformat Java source code to comply with [Google Java Style](https://google.github.io/styleguide/javaguide.html).  Minimum supported runtime version is JDK 8. |
-| `google-java-formatter-jdk11`           | Runs [Google Java Formatter](https://github.com/google/google-java-format) to reformat Java source code to comply with [Google Java Style](https://google.github.io/styleguide/javaguide.html).  Minimum supported runtime version is JDK 11. |
-| `ktlint`           | Runs [Ktlint](https://ktlint.github.io/) to lint and reformat Kotlin source code. |
-| `pmd`           | Runs [PMD](https://pmd.github.io/) static code analyzer on Java source files. |
+| Hook name              | Description                                                                                        |
+| ---------------------- | -------------------------------------------------------------------------------------------------- |
+| `google-java-format`   | Runs [Google Java Formatter](https://github.com/google/google-java-format) to reformat Java source code to comply with [Google Java Style](https://google.github.io/styleguide/javaguide.html). |
 
-### Notes about the `detekt` hook
-
-To specify a custom detekt configuration, simply pass the argument to the hook:
-
-```yaml
-    - id: detekt
-      args: [--config, detekt-config.yml]
-```
-
-Other [CLI](https://arturbosch.github.io/detekt/cli.html) arguments are also supported.
-
-### Notes about the `google-java-formatter-jdk[version]` hook
+### Notes about the `google-java-format` hook
 
 Minimum required arguments for the hook:
 
 ```yaml
-    - id: google-java-formatter-jdk[version]
-      args: [--replace, --set-exit-if-changed]
+- id: google-java-format
+  args: [--replace, --set-exit-if-changed]
 ```
 
-Other [CLI](https://github.com/google/google-java-format) arguments are also supported. 
-
-You can also use Coursier to get the list of options.
-```
-[JDK 8]
-cs launch com.google.googlejavaformat:google-java-format:1.7 -- --help
-
-[JDK 11+]
-cs launch com.google.googlejavaformat:google-java-format:1.9 -- --help
-```
-
-### Notes about the `ktlint` hook
-
-Minimum required arguments for the hook:
-
-```yaml
-    - id: ktlint
-      args: [--format]
-```
-
-Other [CLI](https://ktlint.github.io/#getting-started) arguments are also supported. 
-
-You can also use Coursier to get the list of options.
-```
-cs launch com.pinterest:ktlint:0.39.0 -M com.pinterest.ktlint.Main -- --help
-```
-
-### Notes about the `pmd` hook
-
-Required arguments for the hook:
-
-| Argument | Description |
-| -------- | -------------------------------------------- |
-| dir | Root directory for sources.                       |
-| rulesets | Comma separated list of ruleset names to use.| 
-
-```yaml
-    - id: pmd
-      args: [ -dir, src/main/java, -rulesets, pmd-ruleset.xml ]
-```
-
-Other [CLI](https://pmd.github.io/latest/pmd_userdocs_installation.html) arguments are also supported.
+Other [CLI arguments](https://github.com/google/google-java-format) arguments are also supported. 
