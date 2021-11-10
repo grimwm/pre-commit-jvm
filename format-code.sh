@@ -7,13 +7,13 @@ JAVA_VERSION=$(java -version 2>&1 | head -1 | sed 's/.* version "//g; s/".*//g; 
 CACHE_DIR="${HOME}/.cache/pre-commit-jvm/google-java-format"
 
 mkdir -p "${CACHE_DIR}"
-pushd "${CACHE_DIR}"
+pushd "${CACHE_DIR}" >/dev/null
 if [ ! -f "${JAR_FILE}" ]
 then
   curl -s -LJO "${URL}"
   chmod 0755 ${JAR_FILE}
 fi
-popd
+popd >/dev/null
 
 # Per https://github.com/google/google-java-format#jdk-16
 if [[ "${JAVA_VERSION}" -ge 16 ]] ; then
